@@ -1,0 +1,82 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 30px;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.logo h1 {
+    font-size: 2.5rem;
+    color: #F15A24;
+    font-weight: bold;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 20px; /* Расстояние между карточками */
+}
+
+.card {
+    width: 380px; /* Увеличенный размер карточек */
+    height: 220px; /* Увеличенный размер карточек */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.room-card {
+    background-color: #E8E1D9;
+}
+
+.create-card {
+    background-color: #EC5B28;
+    font-weight: bolder;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.file-browser-card {
+    background-color: #A9A9A9;
+    font-weight: bolder;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 1.5rem; /* Увеличен размер текста */
+    margin-top: 10px;
+}
+
+.card-subtitle {
+    font-size: 1rem; /* Увеличен размер текста */
+    color: gray;
+}
+
+
