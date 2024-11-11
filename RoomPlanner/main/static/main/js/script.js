@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function() {
     const registrationForm = document.getElementById('registration-form');
     
@@ -6,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Логика для регистрации пользователя (валидация, отправка на сервер и т.д.)
         // Если успешно, перенаправляем на основную страницу
-        window.location.href = 'main.html';
+        // window.location.href = "{% url 'main' %}";
     });
 });
 

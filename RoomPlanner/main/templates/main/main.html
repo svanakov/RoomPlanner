@@ -1,3 +1,4 @@
+{% load static%}
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -5,12 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Planner - Main</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
 </head>
 
 <body>
 
-    <div class="logo"> <img src="images/Logo RP.png" alt="logo" width="181" height="52" id="logo"></div>
+    <div class="logo"> <img src="{% static 'main/img/Logo RP.png' %}" alt="logo" width="181" height="52" id="logo"></div>
 
     <div class="cards">
         <div class="card room-card" id="room">
@@ -18,17 +19,17 @@
             <p class="card-subtitle">Редактировано 3 дня назад</p>
         </div>
         <div class="card create-card">
-            <div><img src="images/plus.png" alt=""></div>
+            <div><img src="{% static 'main/img/plus.png' %}" alt=""></div>
             <p class="card-title">Создать новый</p>
         </div>
         <div class="card file-browser-card">
-            <div><img src="images/search.png" alt=""></div>
+            <div><img src="{% static 'main/img/search.png' %}" alt=""></div>
             <p class="card-title">Браузер файлов</p>
         </div>
     </div>
 
 
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
 </body>
 
 </html>

@@ -5,5 +5,5 @@ from django.http import HttpResponse
 def registration(request):
     return render(request, 'main/registration.html')
 
-def about(reques):
-    return HttpResponse("<h4>Info</h4>")
+def main(request):
+    return render(request, 'main/main.html')
