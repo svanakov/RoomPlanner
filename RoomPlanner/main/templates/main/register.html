@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Planner</title>
+    <link rel="stylesheet" href="{% static 'main/css/reg.css' %}">
+</head>
+<body>
+    <div class="logo">
+        <img src="{% static 'main/img/sv.png' %}" alt="logo" width="97" height="76" onclick="reloadPage()">
+    </div>
+
+    <div class="registration" id="registration">
+		<h1>Регистрация</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-big">Зарегистрироваться</button>
+        </form>
+
+        <div> 
+            {% if form.errors %}
+                <div class="message">
+                    <p>Такой пользователь уже существует. Пожалуйста, попробуйте снова.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Кнопка для перехода на страницу авторизации -->
+    <div class="login-button-container">
+        <a href="{% url 'login' %}" class="login-button">Перейти к авторизации</a>
+    </div>
+</body>
+</html>

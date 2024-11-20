@@ -14,14 +14,16 @@ body {
   padding: o;
   box-sizing: border-box;
 }
-/* a {
-  color: white;
-} */
+
 .newuser {
   text-align: center;
   font-size: 1rem;
   margin-top: 1rem;
   color: #333333;
+}
+
+.newuser a {
+  color: #027BE5 !important;
 }
 
 .logo {

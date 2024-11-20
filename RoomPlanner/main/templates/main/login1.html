@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация - Room Planner</title>
+    <link rel="stylesheet" href="{% static 'main/css/log.css' %}">
+</head>
+
+<body>
+    <!-- Логотип -->
+    <div class="logo">
+        <img src="{% static 'main/img/sv.png' %}" alt="logo" width="97" height="76" onclick="reloadPage()">
+    </div>
+
+    <!-- Форма авторизации -->
+    <div class="registration" id="registration">
+        <div class="bigLogo">
+            <img src="{% static 'main/img/test1.png' %}" alt="RP" width="393" height="115">
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-big">Войти</button>
+        </form>
+        <!-- Ссылка на регистрацию -->
+        <div class="newuser">
+            <p>Новый пользователь? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+        </div>
+
+    </div>
+</body>
+
+</html>

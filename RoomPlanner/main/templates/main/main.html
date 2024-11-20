@@ -1,4 +1,4 @@
-{% load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -6,13 +6,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Planner - Main</title>
-    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/main1.css' %}">
 </head>
 
 <body>
+    <div class="logo">
+        <img src="{% static 'main/img/Logo RP.png' %}" alt="logo" width="181" height="52" id="logo">
+    </div>
 
-    <div class="logo"> <img src="{% static 'main/img/Logo RP.png' %}" alt="logo" width="181" height="52" id="logo"></div>
-
+    <div class="user-info">
+        {% if user.is_authenticated %}
+            <p>Привет, {{ user.username }}! | <a href="{% url 'logout' %}">Выйти</a></p>
+        {% endif %}
+    </div>
+    
     <div class="cards">
         <div class="card room-card" id="room">
             <p class="card-title">Комната №1</p>
@@ -27,7 +34,6 @@
             <p class="card-title">Браузер файлов</p>
         </div>
     </div>
-
 
     <!-- <script src="script.js"></script> -->
 </body>
