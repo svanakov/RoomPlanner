@@ -1,23 +1,23 @@
-{% load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Planner</title>
-    <link rel="stylesheet" href="{% static 'main/css/test.css' %}">
+    <title>Начальная страница</title>
+    <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
 </head>
-
 <body>
-    <div class="logo"><img src="{% static 'main/img/sv.png' %}" alt="logo" width="97" height="76" onclick="reloadPage()"></div>
-    <div class="registration" id="registration">
-        <div><img src="{% static 'main/img/Logo RP.png' %}" alt="RP"></div>
-        <form id="registration-form">
-            <button type="button" class="btn-big" id="registration-link" onclick="location.href='/login/'">Продолжить</button>
-        </form>
+    <div class="start-page">
+        <img src="{% static 'main/img/home.png' %}" alt="Начальная страница">
+        <div class="button-container">
+            <button id="continue-btn" class="btn-big">Продолжить</button>
+        </div>
     </div>
-
+    <script>
+        document.getElementById('continue-btn').addEventListener('click', function() {
+            window.location.href = '/login/'; // Замените '/playground/' на нужный URL
+        });
+    </script>
 </body>
-
 </html>

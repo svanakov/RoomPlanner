@@ -1,0 +1,126 @@
+/* Playground page */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+#container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #f9f4e9;
+    overflow: visible; /* Измените на visible, если мебель выходит за границы */
+}
+
+.furniture {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background-color: #ec5b28;
+    cursor: grab;
+}
+
+.furniture:active {
+    cursor: grabbing;
+}
+
+
+
+
+.room-name {
+    z-index: 1;
+    display: flex;
+    position: fixed;  /* Закрепляет меню внизу экрана */
+    transform: translateX(-50%);  /* Выравнивание по центру экрана */
+    left: 50%;  /* Центрирует по горизонтали относительно экрана */
+    bottom: 80px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.3);
+
+}
+
+
+/* Styling for low_menu */
+.low_menu {
+    display: flex;
+    justify-content: center;  /* Центрирует кнопки по горизонтали */
+    background-color: rgba(61, 61, 61, 0.90);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 14px;
+    width: fit-content;  /* Ширина меню подстраивается под содержимое */
+    position: fixed;  /* Закрепляет меню внизу экрана */
+    bottom: 20px;  /* Отступ от нижней границы экрана */
+    left: 50%;  /* Центрирует по горизонтали относительно экрана */
+    transform: translateX(-50%);  /* Выравнивание по центру экрана */
+}
+
+.low_item {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.35);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 10px 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 4.5px;
+    font-size: 14px;
+
+}
+
+.low_item:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Styling for vertical menu */
+.vertical_menu {
+    z-index: 1;
+    background-color: rgba(61, 61, 61, 0.90);
+    padding: 14px;
+    border-radius: 20px;
+    width: 190px; /* Фиксированная ширина */
+    height: calc(100vh - 60px); /* Высота окна минус отступы сверху и снизу */
+    position: fixed;
+    top: 30px; /* Отступ сверху */
+    bottom: 30px; /* Отступ снизу */
+    right: 30px; /* Меню у правого края экрана */
+    overflow-y: auto; /* Скроллинг, если содержимое превышает высоту меню */
+    box-sizing: border-box; /* Учитываем padding в размерах */
+    font-size: 14px;
+    font-weight: regilar;
+}
+
+/* Настройка секций */
+.menu_section {
+    display: flex;
+    flex-wrap: wrap; /* Элементы переносятся на новую строку */
+    gap: 10px; /* Расстояние между элементами */
+    align-items: flex-start;
+}
+
+.menu_section h3 {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-weight: lighter;
+    height: 1px;
+    width: 100%; /* Заголовок занимает всю ширину */
+    text-align: left;
+}
+
+/* Настройка кнопок */
+.menu_item {
+    flex: 0 0 46%; /* Элементы занимают 48% ширины строки */
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.35);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box; /* Учитываем padding в размерах */
+}
+
+.menu_item:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}

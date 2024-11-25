@@ -30,3 +30,6 @@ def register(request):
 def main(request):
     return render(request, 'main/main.html')
     
+def playground(request):
+    return render(request, 'main/playground.html')
+    

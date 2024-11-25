@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Furniture</title>
+    <link rel="stylesheet" href="{% static 'main/css/PG.css' %}">
+</head>
+
+<body>
+    <div class="logo">
+        <img src="{% static 'main/img/Logo RP.png' %}" alt="logo" width="181" height="52" id="logo">
+    </div>
+    <div class="vertical_menu">
+        <div class="menu_section">
+            <h3>Мебель</h3>
+            <div class="menu_item" id="add-sofa1">Диван1</div>
+            <div class="menu_item" id="add-sofa2">Диван2</div>
+            <div class="menu_item" id="add-chair1">Кресло1</div>
+            <div class="menu_item" id="add-table">Стол</div>
+        </div>
+
+        <div class="menu_section">
+            <h3>Украшения</h3>
+            <div class="menu_item" id="add-chair2">Кресло2</div>
+            <div class="menu_item" id="add-coffe1">Столик1</div>
+            <div class="menu_item" id="add-coffe2">Столик2</div>
+            <div class="menu_item" id="add-lamp">Лампа</div>
+        </div>
+    </div>    
+
+    <div id="container"></div>
+    
+    <div id="room-name" class="room-name"></div> <!-- Для отображения имени комнаты -->
+
+    <div class="low_menu">
+        <button class="low_item" id="reset-btn">Сбросить</button>
+        <button class="low_item" id="save-btn">Сохранить комнату</button>
+        <button class="low_item" id="save-progress-btn">Сохранить прогресс</button>
+        <button class="low_item" id="exit-btn">На главную</button>
+    </div>
+
+    <script>
+        const addSofaBtn1 = document.getElementById('add-sofa1');
+        const addSofaBtn2 = document.getElementById('add-sofa2');
+        const addChairBtn1 = document.getElementById('add-chair1');
+        const addChairBtn2 = document.getElementById('add-chair2');
+        const addTableBtn = document.getElementById('add-table');
+        const addCoffeBtn1 = document.getElementById('add-coffe1');
+        const addCoffeBtn2 = document.getElementById('add-coffe2');
+        const addLampBtn = document.getElementById('add-lamp');
+
+        const resetBtn = document.getElementById('reset-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const saveProgressBtn = document.getElementById('save-progress-btn');
+        const exitBtn = document.getElementById('exit-btn');
+        const roomNameDisplay = document.getElementById('room-name');
+
+        const furnitureImages = {
+            sofa1: "/static/main/img/sofa1.png",
+            sofa2: "/static/main/img/sofa2.png",
+            chair1: "/static/main/img/chair1.png",
+            chair2: "/static/main/img/chair2.png",
+            table: "/static/main/img/table.png",
+            coffe1: "/static/main/img/coffe1.png",
+            coffe2: "/static/main/img/coffe2.png",
+            lamp: "/static/main/img/lamp.png"
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedRoom = JSON.parse(localStorage.getItem('roomData'));
+            if (savedRoom) {
+                roomNameDisplay.textContent = `Комната: ${savedRoom.roomName}`;
+                savedRoom.furniture.forEach(item => {
+                    createFurniture(item.type, item.left, item.top, item.src);
+                });
+            }
+        });
+
+        addSofaBtn1.addEventListener('click', () => addFurniture('sofa1'));
+        addSofaBtn2.addEventListener('click', () => addFurniture('sofa2'));
+        addChairBtn1.addEventListener('click', () => addFurniture('chair1'));
+        addChairBtn2.addEventListener('click', () => addFurniture('chair2'));
+        addTableBtn.addEventListener('click', () => addFurniture('table'));
+        addCoffeBtn1.addEventListener('click', () => addFurniture('coffe1'));
+        addCoffeBtn2.addEventListener('click', () => addFurniture('coffe2'));
+        addLampBtn.addEventListener('click', () => addFurniture('lamp'));
+
+        resetBtn.addEventListener('click', resetFurniture);
+        saveBtn.addEventListener('click', saveRoom);
+        saveProgressBtn.addEventListener('click', saveProgress);
+        exitBtn.addEventListener('click', exitToMain);
+
+        let clickCount = 0;
+        let clickTimer = null;
+
+        function addFurniture(type) {
+            const furniture = document.createElement('img');
+            furniture.src = furnitureImages[type];
+            furniture.classList.add('furniture');
+            furniture.setAttribute('draggable', 'false');
+            furniture.style.left = `${Math.random() * (container.offsetWidth - 110)}px`;
+            furniture.style.top = `${Math.random() * (container.offsetHeight - 110)}px`;
+            furniture.dataset.rotation = 0;
+
+            container.appendChild(furniture);
+
+            furniture.addEventListener('mousedown', startDrag); // Перетаскивание
+            furniture.addEventListener('dblclick', rotateFurniture); // Вращение при двойном клике
+            furniture.addEventListener('click', handleClick); // Отслеживаем клики
+        }
+
+        function handleClick(event) {
+            clickCount++;
+            
+            if (clickCount === 1) {
+                clickTimer = setTimeout(() => {
+                    clickCount = 0; // Сбрасываем после первого клика
+                }, 300); // Ждем 300мс для определения количества кликов
+            }
+
+            if (clickCount === 3) { // Тройной клик
+                deleteFurniture(event);
+                clickCount = 0; // Сбрасываем счетчик после тройного клика
+                clearTimeout(clickTimer); // Останавливаем таймер
+            }
+        }
+
+        function rotateFurniture(event) {
+            const furniture = event.target;
+            let rotation = parseInt(furniture.dataset.rotation, 10) || 0;
+
+            rotation = (rotation + 90) % 360;
+
+            furniture.dataset.rotation = rotation;
+            furniture.style.transform = `rotate(${rotation}deg)`;
+        }
+
+        function deleteFurniture(event) {
+            const furniture = event.target;
+            furniture.remove();
+        }
+
+        function startDrag(event) {
+            const furniture = event.target;
+            let startX = event.clientX;
+            let startY = event.clientY;
+            let offsetLeft = furniture.offsetLeft;
+            let offsetTop = furniture.offsetTop;
+
+            function mouseMove(e) {
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+
+                furniture.style.left = `${offsetLeft + dx}px`;
+                furniture.style.top = `${offsetTop + dy}px`;
+            }
+
+            function mouseUp() {
+                document.removeEventListener('mousemove', mouseMove);
+                document.removeEventListener('mouseup', mouseUp);
+            }
+
+            document.addEventListener('mousemove', mouseMove);
+            document.addEventListener('mouseup', mouseUp);
+        }
+
+
+        function resetFurniture() {
+            const furnitureItems = document.querySelectorAll('.furniture');
+            furnitureItems.forEach(item => item.remove());
+        }
+
+        function saveRoom() {
+            const roomName = prompt('Введите название комнаты:');
+            if (roomName) {
+                const furnitureItems = document.querySelectorAll('.furniture');
+                const furnitureData = Array.from(furnitureItems).map(item => {
+                    return {
+                        type: item.src.split('/').pop().split('.')[0],
+                        left: item.style.left,
+                        top: item.style.top,
+                        rotation: item.dataset.rotation,
+                        src: item.src
+                    };
+                });
+
+                const currentDate = new Date();
+                const formattedDate = currentDate.toLocaleString('ru-RU', { 
+                    year: 'numeric', 
+                    month: 'numeric', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                }).replace(',', ' в'); // Преобразуем в формат '2024-11-24 в 10:25'
+
+                const roomData = {
+                    roomName: roomName,
+                    furniture: furnitureData,
+                    lastEdited: formattedDate // Сохраняем в нужном формате
+                };
+
+                localStorage.setItem('roomData', JSON.stringify(roomData));
+                roomNameDisplay.textContent = `Комната: ${roomName}`;
+                alert('Комната сохранена!');
+            }
+        }
+
+
+        function saveProgress() {
+            const furnitureItems = document.querySelectorAll('.furniture');
+            const furnitureData = Array.from(furnitureItems).map(item => {
+                return {
+                    left: item.style.left,
+                    top: item.style.top,
+                    type: item.src.split('/').pop().split('.')[0],
+                    rotation: item.dataset.rotation,
+                    src: item.src
+                };
+            });
+
+            const savedRoom = JSON.parse(localStorage.getItem('roomData')) || {};
+            savedRoom.furniture = furnitureData;
+
+            localStorage.setItem('roomData', JSON.stringify(savedRoom));
+            localStorage.setItem('lastEdited', new Date().toISOString());  // Обновляем время последнего редактирования
+            alert('Прогресс сохранен!');
+        }
+
+        function exitToMain() {
+            window.location.href = "/main";
+        }
+
+        function createFurniture(type, left, top, src) {
+            const furniture = document.createElement('img');
+            furniture.src = src;
+            furniture.classList.add('furniture');
+            furniture.style.left = left;
+            furniture.style.top = top;
+            furniture.setAttribute('draggable', 'false');
+
+            container.appendChild(furniture);
+            furniture.addEventListener('mousedown', startDrag);
+        }
+    </script>
+</body>
+
+</html>

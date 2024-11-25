@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Planner - Main</title>
-    <link rel="stylesheet" href="{% static 'main/css/main1.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
 </head>
 
 <body>
@@ -16,26 +16,26 @@
 
     <div class="user-info">
         {% if user.is_authenticated %}
-            <p>Привет, {{ user.username }}! | <a href="{% url 'logout' %}">Выйти</a></p>
+            <p>{{ user.username }} | <a href="{% url 'logout' %}">Выйти</a></p>
         {% endif %}
     </div>
     
     <div class="cards">
-        <div class="card room-card" id="room">
-            <p class="card-title">Комната №1</p>
-            <p class="card-subtitle">Редактировано 3 дня назад</p>
+        <!-- Комната с актуальными данными -->
+        <div class="card room-card" id="room" onclick="location.href='/playground/'">
+            <p class="card-title" id="room-name"></p> <!-- Название комнаты -->
+            <p class="card-subtitle" id="last-edited"></p> <!-- Время редактирования -->
         </div>
-        <div class="card create-card">
+
+        <div class="card create-card" id="create-new-room">
             <div><img src="{% static 'main/img/plus.png' %}" alt=""></div>
             <p class="card-title">Создать новый</p>
         </div>
-        <div class="card file-browser-card">
-            <div><img src="{% static 'main/img/search.png' %}" alt=""></div>
-            <p class="card-title">Браузер файлов</p>
-        </div>
+
     </div>
 
     <!-- <script src="script.js"></script> -->
+    <script src="{% static 'main/js/main.js' %}"></script>
 </body>
 
 </html>
